@@ -12,3 +12,17 @@ export const newOrder = catchAsyncErrors(
     });
   }
 );
+
+//get all orders ----- only for admin
+export const getAllOrdersService = async (res: Response) => {
+  try {
+    const orders = await OrderModel.find().sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      message: "All Order Get",
+      orders,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};

@@ -9,7 +9,7 @@ import path from "path";
 import sendEmail from "../utils/sendEmail";
 import { cookieOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
-import { getUserById } from "../services/user.services";
+import { getAllUsersService, getUserById } from "../services/user.services";
 import cloudinary from "cloudinary";
 
 interface IRegistrationBody {
@@ -367,6 +367,17 @@ export const updateUserProfile = catchAsyncErrors(
         message: "Profile updated successfully",
         user,
       });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+//get all users
+export const getAllUsers = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllUsersService(res);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
