@@ -1,26 +1,41 @@
 import express from "express";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 import {
+  addAnswer,
+  addQuestion,
+  addReplyToReview,
+  addReview,
   editCourse,
   getAllCourse,
+  getCourseByUser,
   getSingleCourse,
   uploadCourse,
 } from "../controllers/course.controller";
 
-const userRouter = express.Router();
+const courseRouter = express.Router();
 
-userRouter.post(
+courseRouter.post(
   "/create-course",
   isAuthenticated,
   authorizeRoles("admin"),
   uploadCourse
 );
-userRouter.put(
+courseRouter.put(
   "/edit-course/:id",
   isAuthenticated,
   authorizeRoles("admin"),
   editCourse
 );
-userRouter.get("/get-course/:id", getSingleCourse);
-userRouter.get("/get-all-course", getAllCourse);
-export default userRouter;
+courseRouter.get("/get-course/:id", getSingleCourse);
+courseRouter.get("/get-all-course", getAllCourse);
+courseRouter.get("/get-course-content/:id", isAuthenticated, getCourseByUser);
+courseRouter.put("/add-question", isAuthenticated, addQuestion);
+courseRouter.put("/add-answer", isAuthenticated, addAnswer);
+courseRouter.put("/add-review/:id", isAuthenticated, addReview);
+courseRouter.put(
+  "/add-reply",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  addReplyToReview
+);
+export default courseRouter;
