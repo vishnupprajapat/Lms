@@ -2,8 +2,6 @@ require("dotenv").config();
 import express, { Response, Request, NextFunction } from "express";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import ErrorHandler from "../utils/ErrorHandler";
-import { redis } from "../utils/redis";
-import mongoose from "mongoose";
 import OrderModel, { IOrder } from "../models/order.model";
 import UserModel from "../models/user.model";
 import CourseModel from "../models/course.model";
@@ -11,7 +9,7 @@ import path from "path";
 import ejs from "ejs";
 import sendMail from "../utils/sendEmail";
 import NotificationModel from "../models/notification.model";
-import { newOrder } from "../services/order.services";
+import { getAllOrdersService, newOrder } from "../services/order.services";
 
 //create order
 
@@ -78,6 +76,17 @@ export const createOrder = catchAsyncErrors(
       newOrder(data, res, next);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+//get all orders
+export const getAllOrders = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrdersService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
     }
   }
 );

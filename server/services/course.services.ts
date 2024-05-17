@@ -13,3 +13,17 @@ export const createCourse = catchAsyncErrors(
     });
   }
 );
+
+//get all courses
+export const getAllCoursesService = async (res: Response) => {
+  try {
+    const courses = await CourseModel.find().sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      message: "All Courses Get",
+      courses,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
