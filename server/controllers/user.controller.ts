@@ -9,7 +9,12 @@ import path from "path";
 import sendEmail from "../utils/sendEmail";
 import { cookieOptions, refreshTokenOptions, sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
-import { getAllUsersService, getUserById } from "../services/user.services";
+import {
+  deleteUserService,
+  getAllUsersService,
+  getUserById,
+  updateUserRoleService,
+} from "../services/user.services";
 import cloudinary from "cloudinary";
 
 interface IRegistrationBody {
@@ -378,6 +383,29 @@ export const getAllUsers = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllUsersService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+//update user role --- only for admin
+export const updateUserRole = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id, role } = req.body;
+      updateUserRoleService(id, role, res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+//delete user --- only for admin
+export const deleteUser = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.body;
+      deleteUserService(id, res, next);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
