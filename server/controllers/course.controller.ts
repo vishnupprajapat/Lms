@@ -5,6 +5,7 @@ import ErrorHandler from "../utils/ErrorHandler";
 import cloudinary from "cloudinary";
 import {
   createCourse,
+  deleteCourseService,
   getAllCoursesService,
 } from "../services/course.services";
 import CourseModel from "../models/course.model";
@@ -383,6 +384,19 @@ export const getAllCourses = catchAsyncErrors(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       getAllCoursesService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+//delete course -- only admin
+
+export const deleteCourse = catchAsyncErrors(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      deleteCourseService(id, res, next);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }
