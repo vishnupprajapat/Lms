@@ -9,4 +9,6 @@ const redisClient = () => {
   throw new Error("Redis connection Failed");
 };
 
-export const redis = new Redis(redisClient());
+export const redis = new Redis(redisClient(), {
+  connectTimeout: 10000,
+});
