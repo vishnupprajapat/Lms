@@ -22,7 +22,7 @@ app.use(cookieParser());
 //cors
 app.use(
   cors({
-    origin: ["https://lms-api-taupe.vercel.app/"],
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
