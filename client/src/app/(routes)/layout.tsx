@@ -10,7 +10,6 @@ export default function RootLayout({
   const [open, setOpen] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const [route, setRoute] = useState("login");
-  console.log(open);
   return (
     <>
       <Header
