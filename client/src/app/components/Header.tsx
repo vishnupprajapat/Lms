@@ -8,7 +8,9 @@ import { CustomModal } from "@/components/modal/Custom-modal";
 import Login from "./auth/Login";
 import SignUp from "./auth/SignUp";
 import Verification from "./auth/Verification";
-
+import { FaUserCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Image from "next/image";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -20,6 +22,7 @@ type Props = {
 const Header: FC<Props> = ({ setOpen, open, activeItem, route, setRoute }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, SetOpenSidebar] = useState(false);
+  const { user } = useSelector((state: any) => state.auth);
   const handleClose = (e: any) => {
     if (e.target.id === "screen") {
       SetOpenSidebar(false);
@@ -33,9 +36,9 @@ const Header: FC<Props> = ({ setOpen, open, activeItem, route, setRoute }) => {
             <div className="">
               <Link
                 href={"/"}
-                className={`text-[25px] font-Poppins font-[500] text-black dark:text-white logo`}
+                className={`text-[25px] font-Poppins font-[800] text-black dark:text-white logo`}
               >
-                ELearning
+                CMSMIN<span className="text-[#00a5cf]">D</span>S
               </Link>
             </div>
             <div className="flex items-center">
@@ -49,11 +52,28 @@ const Header: FC<Props> = ({ setOpen, open, activeItem, route, setRoute }) => {
                   onClick={() => SetOpenSidebar(true)}
                 />
               </div>
-              <HiUserCircle
-                size={30}
-                className="dark:text-white cursor-pointer text-black ml-3"
-                onClick={() => setOpen(true)}
-              />
+              {user ? (
+                <Link href="/profile">
+                  {user.avatar ? (
+                    <Image
+                      src={user.avatar}
+                      alt=""
+                      className="w-[30px] h-[30px] rounded-full cursor-pointer"
+                    />
+                  ) : (
+                    <HiUserCircle
+                      size={30}
+                      className="curser-pointer dark:text-white text-black"
+                    />
+                  )}
+                </Link>
+              ) : (
+                <HiUserCircle
+                  size={30}
+                  className="dark:text-white cursor-pointer text-black ml-3"
+                  onClick={() => setOpen(true)}
+                />
+              )}
             </div>
           </div>
         </div>
