@@ -8,7 +8,7 @@ interface ITokenOptions {
   maxAge: number;
   httpOnly: boolean;
   sameSite: "lax" | "strict" | "none" | undefined;
-  secure?: boolean;
+  secure: boolean;
 }
 //parse environment variables to integrate with fallback values
 
