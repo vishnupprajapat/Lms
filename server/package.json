@@ -32,7 +32,8 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.13",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vercel": "^34.2.6"
   },
   "devDependencies": {
     "@types/nodemailer": "^6.4.14"
