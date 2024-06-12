@@ -9,7 +9,7 @@ const redisClient = () => {
   return redisUrl;
 };
 
-export const redis = new Redis(redisClient());
+export const redis = new Redis(redisClient(),{ connectTimeout: 15000 });
 
 redis.on("connect", () => {
   console.log("Redis connection established");
