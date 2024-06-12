@@ -6,5 +6,13 @@
       "use": "@vercel/node"
     }
   ],
+    "functions": {
+    "api/login.js": {
+      "maxDuration": 20
+    },
+    "api/register.js": {
+      "maxDuration": 20
+    }
+  }
   "routes": [{ "src": "/(.*)", "dest": "server.ts" }]
 }
