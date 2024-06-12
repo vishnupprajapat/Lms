@@ -13,6 +13,6 @@
     "api/register": {
       "maxDuration": 20
     }
-  }
+  },
   "routes": [{ "src": "/(.*)", "dest": "server.ts" }]
 }
