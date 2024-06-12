@@ -2,9 +2,19 @@
   "version": 2,
   "builds": [
     {
-      "src": "server.ts",
+      "src": "index.ts",
       "use": "@vercel/node"
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "server.ts" }]
+  "functions": {
+    "api/login.js": {
+      "maxDuration": 10
+    },
+    "api/register.js": {
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "index.js" }
+  ]
 }
