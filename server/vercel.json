@@ -6,17 +6,5 @@
       "use": "@vercel/node"
     }
   ],
-  "functions": {
-    "api/login.js": {
-      "maxDuration": 10
-    },
-    "api/register.js": {
-      "maxDuration": 10
-    }
-  },
-  "routes": [
-    { "src": "/api/login", "dest": "api/login.js" },
-    { "src": "/api/register", "dest": "api/register.js" },
-    { "src": "/(.*)", "dest": "index.js" }
-  ]
+  "routes": [{ "src": "/(.*)", "dest": "index.js" }]
 }
