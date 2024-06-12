@@ -36,12 +36,16 @@ export const refreshTokenOptions: ITokenOptions = {
   sameSite: "none",
   secure: true,
 };
-export const sendToken = (user: IUser, statusCode: number, res: Response) => {
+export const sendToken = async (
+  user: IUser,
+  statusCode: number,
+  res: Response
+) => {
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
   // upload session to redis
 
-  redis.set(user._id, JSON.stringify(user), (err) => {
+  await redis.set(user._id, JSON.stringify(user), (err) => {
     if (err) {
       console.error("Failed to set user in Redis:", err);
       return res
