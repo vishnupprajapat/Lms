@@ -7,10 +7,10 @@
     }
   ],
     "functions": {
-    "api/login.js": {
+    "api/login": {
       "maxDuration": 20
     },
-    "api/register.js": {
+    "api/register": {
       "maxDuration": 20
     }
   }
