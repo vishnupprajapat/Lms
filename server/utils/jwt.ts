@@ -45,19 +45,12 @@ export const sendToken = async (
   const refreshToken = user.SignRefreshToken();
   // upload session to redis
 
-  await redis.set(user._id, JSON.stringify(user), (err) => {
-    if (err) {
-      console.error("Failed to set user in Redis:", err);
-      return res
-        .status(500)
-        .json({ success: false, message: "Internal Server Error" });
-    }
-    res.cookie("access_token", accessToken, cookieOptions);
-    res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-    res.status(statusCode).json({
-      success: true,
-      user,
-      accessToken,
-    });
+  // await redis.set(user._id, JSON.stringify(user))
+  res.cookie("access_token", accessToken, cookieOptions);
+  res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+  res.status(statusCode).json({
+    success: true,
+    user,
+    accessToken,
   });
 };
