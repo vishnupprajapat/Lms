@@ -9,7 +9,7 @@ import orderRouter from "./routes/order.route";
 import notificationRouter from "./routes/notification.route";
 import analyticsRouter from "./routes/analytics.route";
 import layoutRouter from "./routes/layout.route";
-
+import { rateLimit } from "express-rate-limit";
 export const app = express();
 
 //body parser
@@ -28,6 +28,15 @@ app.use(
     allowedHeaders: "Content-Type, Authorization",
   })
 );
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  // store: ... , // Redis, Memcached, etc. See below.
+});
+
 //routes
 app.use(
   "/api/v1",
@@ -52,5 +61,5 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
   err.status = 404;
   next(err);
 });
-
+app.use(limiter);
 app.use(ErrorMiddleware);
