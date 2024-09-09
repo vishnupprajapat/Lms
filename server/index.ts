@@ -23,7 +23,7 @@ app.use(cookieParser());
 //cors
 app.use(
   cors({
-    origin: ["https://lms-api-nine.vercel.app", "http://localhost:3000"],
+    origin: ["https://lms-ten-ashen.vercel.app", "http://localhost:3000"],
     credentials: true,
     methods: "GET, POST, PUT, DELETE",
     allowedHeaders: "Content-Type, Authorization",
