@@ -41,19 +41,16 @@ export const sendToken = async (
   statusCode: number,
   res: Response
 ) => {
-  try {
-    const accessToken = user.SignAccessToken();
-    const refreshToken = user.SignRefreshToken();
-    await redis.set(user._id.toString(), JSON.stringify(user), "EX", 604800); // 1 week expiration
-    res.cookie("access_token", accessToken, cookieOptions);
-    res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-    res.status(statusCode).json({
-      success: true,
-      user,
-      accessToken,
-    });
-  } catch (error) {
-    console.error("Error in sendToken:", (error as Error).message);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
+  const accessToken = user.SignAccessToken();
+  const refreshToken = user.SignRefreshToken();
+  // upload session to redis
+  await redis.set(user._id, JSON.stringify(user), "EX", 604800);
+  res.cookie("access_token", accessToken, cookieOptions);
+  res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+  res.status(statusCode).json({
+    success: true,
+    user,
+    accessToken,
+  });
 };
+
