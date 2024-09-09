@@ -44,8 +44,7 @@ export const sendToken = async (
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
   // upload session to redis
-
-  redis.set(user._id, JSON.stringify(user));
+  await redis.set(user._id, JSON.stringify(user), "EX", 604800);
   res.cookie("access_token", accessToken, cookieOptions);
   res.cookie("refresh_token", refreshToken, refreshTokenOptions);
   res.status(statusCode).json({
